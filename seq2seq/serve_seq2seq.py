@@ -40,7 +40,7 @@ class BackendArguments:
         metadata={"help": "Where to cache pretrained models and data"},
     )
     db_path: str = field(
-        default="database",
+        default="F:\AI ITI\graduation project\picard\database",
         metadata={"help": "Where to to find the sqlite files"},
     )
     host: str = field(default="0.0.0.0", metadata={"help": "Bind socket to this host"})
@@ -100,7 +100,7 @@ def main():
             cache_dir=backend_args.cache_dir,
         )
 
-        # Initalize generation pipeline
+        # Initialize generation pipeline
         pipe = Text2SQLGenerationPipeline(
             model=model,
             tokenizer=tokenizer,
@@ -123,12 +123,17 @@ def main():
         @app.get("/ask/{db_id}/{question}")
         def ask(db_id: str, question: str):
             try:
-                outputs = pipe(inputs=Text2SQLInput(utterance=question, db_id=db_id))
+                print('**********************')
+                x=Text2SQLInput(utterance=question, db_id=db_id)
+                print('**********************')
+                outputs = pipe(inputs=x)
+                print('**********************')
                 output = outputs[0]
             except OperationalError as e:
                 raise HTTPException(status_code=404, detail=e.args[0])
             query = output["generated_text"]
             try:
+                print('**********************')
                 conn = connect(backend_args.db_path + "/" + db_id + "/" + db_id + ".sqlite")
                 return AskResponse(query=query, execution_results=conn.execute(query).fetchall())
             except OperationalError as e:

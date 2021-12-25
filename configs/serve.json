@@ -7,7 +7,7 @@
     "schema_serialization_with_db_content": true,
     "normalize_query": true,
     "target_with_db_id": true,
-    "db_path": "/database",
+    "db_path": "F:\\AI ITI\\graduation project\\picard\\database",
     "cache_dir": "/transformers_cache",
     "num_beams": 4,
     "use_picard": true,
@@ -15,5 +15,5 @@
     "picard_mode": "parse_with_guards",
     "picard_schedule": "incremental",
     "picard_max_tokens_to_check": 2,
-    "device": 0
+    "device": -1
 }
