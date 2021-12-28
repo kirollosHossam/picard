@@ -1,6 +1,7 @@
 # Set up logging
 import sys
 import logging
+import speech_recognition as sr
 
 logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
@@ -17,7 +18,7 @@ import os
 from contextlib import nullcontext
 from transformers.hf_argparser import HfArgumentParser
 from transformers.models.auto import AutoConfig, AutoTokenizer, AutoModelForSeq2SeqLM
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from uvicorn import run
 from sqlite3 import connect, OperationalError
 from seq2seq.utils.pipeline import Text2SQLGenerationPipeline, Text2SQLInput, get_schema
@@ -124,7 +125,38 @@ def main():
         def ask(db_id: str, question: str):
             try:
                 print('**********************')
-                x=Text2SQLInput(utterance=question, db_id=db_id)
+                x = Text2SQLInput(utterance=question, db_id=db_id)
+                print('**********************')
+                outputs = pipe(inputs=x)
+                print('**********************')
+                output = outputs[0]
+            except OperationalError as e:
+                raise HTTPException(status_code=404, detail=e.args[0])
+            query = output["generated_text"]
+            try:
+                print('**********************')
+                conn = connect(backend_args.db_path + "/" + db_id + "/" + db_id + ".sqlite")
+                return AskResponse(query=query, execution_results=conn.execute(query).fetchall())
+            except OperationalError as e:
+                raise HTTPException(
+                    status_code=500, detail=f'while executing "{query}", the following error occurred: {e.args[0]}'
+                )
+            finally:
+                conn.close()
+
+        @app.post("/ask_voice/")
+        async def ask_voice(db_id: str, file: UploadFile = File(...)):
+            r = sr.Recognizer()
+            with sr.AudioFile(file.file) as source:
+                audio = r.record(source)
+            try:
+                question = r.recognize_google(audio)
+                print("Text: " + question)
+            except Exception as e:
+                print("Exception: " + str(e))
+            try:
+                print('**********************')
+                x = Text2SQLInput(utterance=question, db_id=db_id)
                 print('**********************')
                 outputs = pipe(inputs=x)
                 print('**********************')
