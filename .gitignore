@@ -147,4 +147,3 @@ train/*
 eval/*
 transformers_cache/*
 wandb/*
-database/*
