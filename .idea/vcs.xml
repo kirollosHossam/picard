@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/fbthrift" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/fizz" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/fmt" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/folly" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/hsthrift" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/rsocket-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/spider" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/test_suite" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/tokenizers" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/wangle" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/zstd" vcs="Git" />
+  </component>
+</project>
