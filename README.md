@@ -1,4 +1,5 @@
-<p align="center">
+ https://us04web.zoom.us/j/73397152894?pwd=WrY53ymbzeVb6tMHYQoSAD9UdoM0ZD.1
+ <p align="center">
     <br>
     <img alt="make it parse" src="https://repository-images.githubusercontent.com/401779782/c2f46be5-b74b-4620-ad64-57487be3b1ab" width="600"/>
     <br>
